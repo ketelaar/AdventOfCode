@@ -27,15 +27,15 @@ fn get_answer_a(input: &str) -> usize {
 
 fn get_answer_b(input: &str) -> usize {
     let number_string_map = HashMap::from([
-        ("one", 1),
-        ("two", 2),
-        ("three", 3),
-        ("four", 4),
-        ("five", 5),
-        ("six", 6),
-        ("seven", 7),
-        ("eight", 8),
-        ("nine", 9)
+        ("one", "o1e"),
+        ("two", "t2o"),
+        ("three", "t3ree"),
+        ("four", "f4ur"),
+        ("five", "f5ve"),
+        ("six", "s6x"),
+        ("seven", "s7ven"),
+        ("eight", "e8ght"),
+        ("nine", "n9ne")
     ]);
 
     input.lines().map(|line| {
@@ -100,7 +100,17 @@ zoneight234
     fn input_example_b() {
         let input = "lrqnqfncvvvrrpkfour92xsxfztwonehsb";
 
-        let expected_answer = 42;
+        let expected_answer = 41;
+        let actual_answer = get_answer_b(input);
+
+        assert_eq!(expected_answer, actual_answer)
+    }
+
+    #[test]
+    fn edge_case_b() {
+        let input = "iowu27dgdisi3eighthree";
+
+        let expected_answer = 23;
         let actual_answer = get_answer_b(input);
 
         assert_eq!(expected_answer, actual_answer)
@@ -111,7 +121,7 @@ zoneight234
         let input = include_str!("../resources/day01.txt");
 
         // TODO: get actual answer
-        let expected_answer = 111111;
+        let expected_answer = 54208;
         let actual_answer = get_answer_b(input);
 
         assert_eq!(expected_answer, actual_answer)
