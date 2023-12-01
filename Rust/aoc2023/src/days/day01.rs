@@ -13,13 +13,12 @@ fn get_answer_a(input: &str) -> usize {
     input
         .lines()
         .map(|line| {
-            let digits: Vec<char> = line
-                .chars()
-                .filter(|c| c.is_ascii_digit())
-                .collect();
+            let digits: Vec<char> = line.chars().filter(|c| c.is_ascii_digit()).collect();
             let first_digit = digits.first().expect("should be a valid digit");
             let last_digit = digits.last().expect("should be a valid digit");
-            let number: usize = format!("{first_digit}{last_digit}").parse().expect("should be a valid number");
+            let number: usize = format!("{first_digit}{last_digit}")
+                .parse()
+                .expect("should be a valid number");
             number
         })
         .sum()
@@ -35,23 +34,28 @@ fn get_answer_b(input: &str) -> usize {
         ("six", "s6x"),
         ("seven", "s7ven"),
         ("eight", "e8ght"),
-        ("nine", "n9ne")
+        ("nine", "n9ne"),
     ]);
 
-    input.lines().map(|line| {
-        let mut new_line = String::default();
-        line.chars().for_each(|char| {
-            new_line = format!("{new_line}{char}").to_string();
-            number_string_map.iter().for_each(|(k, v)| new_line = new_line.replace(k, &v.to_string()).to_string())
-        });
-        let digits: Vec<char> = new_line.chars().filter(|c| c.is_ascii_digit()).collect();
-        let first_digit = digits.first().unwrap();
-        let last_digit = digits.last().unwrap();
+    input
+        .lines()
+        .map(|line| {
+            let mut new_line = String::default();
+            line.chars().for_each(|char| {
+                new_line = format!("{new_line}{char}").to_string();
+                number_string_map
+                    .iter()
+                    .for_each(|(k, v)| new_line = new_line.replace(k, v))
+            });
+            let digits: Vec<char> = new_line.chars().filter(|c| c.is_ascii_digit()).collect();
+            let first_digit = digits.first().unwrap();
+            let last_digit = digits.last().unwrap();
 
-        return format!("{first_digit}{last_digit}")
-            .parse::<usize>()
-            .expect("should be a valid number");
-    }).sum()
+            return format!("{first_digit}{last_digit}")
+                .parse::<usize>()
+                .expect("should be a valid number");
+        })
+        .sum()
 }
 
 #[cfg(test)]
