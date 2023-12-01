@@ -12,3 +12,6 @@ target/
 
 # VS code files
 *.vscode
+
+# JetBrains IDE files
+.idea/

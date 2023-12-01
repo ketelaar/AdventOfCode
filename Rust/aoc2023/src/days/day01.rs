@@ -21,3 +21,30 @@ fn get_answer_a(input: &str) -> usize {
     }
     numbers.iter().sum()
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn example_a() {
+        let input = "1abc2
+pqr3stu8vwx
+a1b2c3d4e5f
+treb7uchet";
+
+        let expected_answer = 142;
+        let actual_answer = get_answer_a(input);
+
+        assert_eq!(expected_answer, actual_answer)
+    }
+
+    #[test]
+    fn answer_a() {
+        let input = include_str!("../resources/day01.txt");
+
+        let expected_answer = 54940;
+        let actual_answer = get_answer_a(input);
+        assert_eq!(expected_answer, actual_answer)
+    }
+}
