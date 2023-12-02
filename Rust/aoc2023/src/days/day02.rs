@@ -1,4 +1,5 @@
 use std::collections::HashMap;
+use strum::{EnumIter, IntoEnumIterator};
 
 pub fn solve() {
     let input = include_str!("../resources/day02.txt");
@@ -9,7 +10,7 @@ pub fn solve() {
     println!("Answer for day 2 part 2 is: {answer_b}");
 }
 
-#[derive(Eq, PartialEq, Hash)]
+#[derive(Eq, PartialEq, Hash, EnumIter)]
 enum CubeColour {
     Red,
     Green,
@@ -97,11 +98,9 @@ fn get_answer_b(input: &str) -> usize {
     Game::parse(input)
         .iter()
         .map(|game| {
-            let red_minimum = game.maximum_for(&CubeColour::Red);
-            let green_minimum = game.maximum_for(&CubeColour::Green);
-            let blue_minimum = game.maximum_for(&CubeColour::Blue);
-
-            red_minimum * green_minimum * blue_minimum
+            CubeColour::iter()
+                .map(|colour| game.maximum_for(&colour))
+                .product::<usize>()
         })
         .sum()
 }
