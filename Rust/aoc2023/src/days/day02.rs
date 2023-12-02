@@ -83,13 +83,11 @@ impl Round {
 }
 
 fn get_answer_a(input: &str) -> usize {
-    let games = Game::parse(input);
-
     let maximum_red = 12;
     let maximum_green = 13;
     let maximum_blue = 14;
 
-    games
+    Game::parse(input)
         .iter()
         .filter(|game| {
             game.maximum_for(&CubeColour::Red) <= maximum_red
