@@ -22,34 +22,27 @@ struct Game {
 }
 
 impl Game {
-    fn new(game_id: u8, rounds: Vec<Round>) -> Game {
-        Game {
-            id: game_id,
-            rounds,
-        }
-    }
-
     fn maximum_for(&self, colour: &CubeColour) -> usize {
         self.rounds
             .iter()
             .map(|r| r.total_for(colour))
             .max()
-            .unwrap()
+            .expect("There should be a minimum value")
     }
 
     fn parse(input: &str) -> Vec<Game> {
         input
             .lines()
-            .map(|line| {
-                let (game_str, rounds_str) =
-                    line.split_once(":").expect("Should be a : on the line");
-                let (_, game_id_str) = game_str
-                    .split_once(" ")
-                    .expect("Should be a space in the string");
+            .filter_map(|line| {
+                let (game_str, rounds_str) = line.split_once(":")?;
+                let (_, game_id_str) = game_str.split_once(" ")?;
 
-                let rounds: Vec<Round> = rounds_str.split(";").map(|s| Round::parse(s)).collect();
+                let rounds = rounds_str.split(";").map(|s| Round::parse(s)).collect();
 
-                return Game::new(game_id_str.parse().expect("Should be a number"), rounds);
+                Some(Game {
+                    id: game_id_str.parse().ok()?,
+                    rounds,
+                })
             })
             .collect()
     }
@@ -61,18 +54,20 @@ struct Round {
 
 impl Round {
     fn parse(round_string: &str) -> Round {
-        let mut counts = HashMap::default();
-        round_string.split(',').for_each(|c| {
-            let (number_str, colour) = c.trim().split_once(" ").unwrap();
-            let number: usize = number_str.parse().unwrap();
+        let counts = round_string
+            .split(',')
+            .filter_map(|c| {
+                let (number_str, colour) = c.trim().split_once(" ")?;
+                let number: usize = number_str.parse().ok()?;
 
-            match colour {
-                "red" => counts.insert(CubeColour::Red, number),
-                "green" => counts.insert(CubeColour::Green, number),
-                "blue" => counts.insert(CubeColour::Blue, number),
-                _ => panic!("Could not parse"),
-            };
-        });
+                match colour {
+                    "red" => Some((CubeColour::Red, number)),
+                    "green" => Some((CubeColour::Green, number)),
+                    "blue" => Some((CubeColour::Blue, number)),
+                    _ => None,
+                }
+            })
+            .collect();
 
         Round { counts }
     }
