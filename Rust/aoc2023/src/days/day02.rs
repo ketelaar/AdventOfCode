@@ -110,4 +110,14 @@ Game 5: 6 red, 1 blue, 3 green; 2 blue, 1 red, 2 green";
 
         assert_eq!(expected_answer, actual_answer)
     }
+
+    #[test]
+    fn answer_a() {
+        let input = include_str!("../resources/day02.txt");
+
+        let expected_answer = 2156;
+        let actual_answer = get_answer_a(input);
+
+        assert_eq!(expected_answer, actual_answer)
+    }
 }
