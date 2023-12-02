@@ -51,9 +51,9 @@ fn get_answer_b(input: &str) -> usize {
             let first_digit = digits.first().unwrap();
             let last_digit = digits.last().unwrap();
 
-            return format!("{first_digit}{last_digit}")
+            format!("{first_digit}{last_digit}")
                 .parse::<usize>()
-                .expect("should be a valid number");
+                .expect("should be a valid number")
         })
         .sum()
 }
@@ -124,7 +124,6 @@ zoneight234
     fn answer_b() {
         let input = include_str!("../resources/day01.txt");
 
-        // TODO: get actual answer
         let expected_answer = 54208;
         let actual_answer = get_answer_b(input);
 
