@@ -27,7 +27,7 @@ impl Game {
             .iter()
             .map(|r| r.total_for(colour))
             .max()
-            .expect("There should be a minimum value")
+            .expect("There should be at least 1 value")
     }
 
     fn parse(input: &str) -> Vec<Game> {
