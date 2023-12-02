@@ -35,10 +35,10 @@ impl Game {
         input
             .lines()
             .filter_map(|line| {
-                let (game_str, rounds_str) = line.split_once(":")?;
-                let (_, game_id_str) = game_str.split_once(" ")?;
+                let (game_str, rounds_str) = line.split_once(':')?;
+                let (_, game_id_str) = game_str.split_once(' ')?;
 
-                let rounds = rounds_str.split(";").map(|s| Round::parse(s)).collect();
+                let rounds = rounds_str.split(';').map(Round::parse).collect();
 
                 Some(Game {
                     id: game_id_str.parse().ok()?,
@@ -58,7 +58,7 @@ impl Round {
         let counts = round_string
             .split(',')
             .filter_map(|c| {
-                let (number_str, colour) = c.trim().split_once(" ")?;
+                let (number_str, colour) = c.trim().split_once(' ')?;
                 let number: usize = number_str.parse().ok()?;
 
                 match colour {
