@@ -1,4 +1,4 @@
-name: Rust
+name: Rust Advent Of Code 2023
 
 on:
   push:
@@ -6,6 +6,9 @@ on:
   pull_request:
     branches: [ "main" ]
 
+defaults:
+  run:
+    working-directory: ./Rust/aoc2023
 env:
   CARGO_TERM_COLOR: always
 
